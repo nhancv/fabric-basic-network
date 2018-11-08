@@ -11,12 +11,11 @@ https://github.com/hyperledger/fabric-samples
 Ex: 
 ./scripts/bootstrap.sh 1.2.1 1.2.1 1.2.1
 
-cd fabcar
 # Start network
-./startFabric.sh
+./startFabcar.sh
 
 # Stop network
-./stopFabric.sh
+./stopFabcar.sh
 ```
 
 Writing Your First Application: https://hyperledger-fabric.readthedocs.io/en/release-1.2/write_first_app.html
