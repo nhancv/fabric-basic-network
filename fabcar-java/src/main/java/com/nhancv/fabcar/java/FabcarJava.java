@@ -185,7 +185,7 @@ public class FabcarJava {
      */
     public void serialize(AppUser appUser) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(
-                Paths.get("cache/" + appUser.getName() + ".jso")))) {
+                Paths.get("cache", appUser.getName() + ".jso")))) {
             oos.writeObject(appUser);
         }
     }
@@ -196,7 +196,7 @@ public class FabcarJava {
      * @param name The name of the user. Used to build file name ${name}.jso
      */
     public AppUser tryDeserialize(String name) throws Exception {
-        if (Files.exists(Paths.get("cache/" + name + ".jso"))) {
+        if (Files.exists(Paths.get("cache", name + ".jso"))) {
             return deserialize(name);
         }
         return null;
@@ -204,7 +204,7 @@ public class FabcarJava {
 
     public AppUser deserialize(String name) throws Exception {
         try (ObjectInputStream decoder = new ObjectInputStream(
-                Files.newInputStream(Paths.get("cache/" + name + ".jso")))) {
+                Files.newInputStream(Paths.get("cache", name + ".jso")))) {
             return (AppUser) decoder.readObject();
         }
     }
