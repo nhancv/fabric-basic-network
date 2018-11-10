@@ -33,7 +33,7 @@ import org.hyperledger.fabric.sdk.HFClient;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
 
 public class Application {
-    private static final Logger log = Logger.getLogger(FabcarJava.class);
+    private static final Logger log = Logger.getLogger(Application.class);
 
     public static void main(String args[]) {
 

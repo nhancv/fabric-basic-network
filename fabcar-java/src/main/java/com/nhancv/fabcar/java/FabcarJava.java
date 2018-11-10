@@ -63,8 +63,6 @@ public class FabcarJava {
      * Invoke blockchain query
      *
      * @param client The HF Client
-     * @throws ProposalException
-     * @throws InvalidArgumentException
      */
     public void queryBlockChain(HFClient client) throws ProposalException, InvalidArgumentException {
         // get channel instance from client
@@ -89,8 +87,6 @@ public class FabcarJava {
      *
      * @param client The HFC client
      * @return Initialized channel
-     * @throws InvalidArgumentException
-     * @throws TransactionException
      */
     public Channel getChannel(HFClient client) throws InvalidArgumentException, TransactionException {
         // initialize channel
@@ -113,7 +109,6 @@ public class FabcarJava {
      * Create new HLF client
      *
      * @return new HLF client instance. Never null.
-     * @throws Exception
      */
     public HFClient getHfClient() throws Exception {
         // initialize default cryptosuite
@@ -130,11 +125,10 @@ public class FabcarJava {
      * If AppUser object with the name already exist on fs it will be loaded and
      * registration and enrollment will be skipped.
      *
-     * @param caClient  The fabric-ca client.
+     * @param caClient The fabric-ca client.
      * @param registrar The registrar to be used.
-     * @param userId    The user id.
+     * @param userId The user id.
      * @return AppUser instance with userId, affiliation,mspId and enrollment set.
-     * @throws Exception
      */
     public AppUser getUser(HFCAClient caClient, AppUser registrar, String userId) throws Exception {
         AppUser appUser = tryDeserialize(userId);
@@ -155,7 +149,6 @@ public class FabcarJava {
      *
      * @param caClient The fabric-ca client
      * @return AppUser instance with userid, affiliation, mspId and enrollment set
-     * @throws Exception
      */
     public AppUser getAdmin(HFCAClient caClient) throws Exception {
         AppUser admin = tryDeserialize("admin");
@@ -170,10 +163,9 @@ public class FabcarJava {
     /**
      * Get new fabic-ca client
      *
-     * @param caUrl              The fabric-ca-server endpoint url
+     * @param caUrl The fabric-ca-server endpoint url
      * @param caClientProperties The fabri-ca client properties. Can be null.
      * @return new client instance. never null.
-     * @throws Exception
      */
     public HFCAClient getHfCaClient(String caUrl, Properties caClientProperties) throws Exception {
         CryptoSuite cryptoSuite = CryptoSuite.Factory.getCryptoSuite();
@@ -190,11 +182,10 @@ public class FabcarJava {
      * Serialize AppUser object to file
      *
      * @param appUser The object to be serialized
-     * @throws IOException
      */
     public void serialize(AppUser appUser) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(
-                Paths.get(appUser.getName() + ".jso")))) {
+                Paths.get("cache/" + appUser.getName() + ".jso")))) {
             oos.writeObject(appUser);
         }
     }
@@ -203,11 +194,9 @@ public class FabcarJava {
      * Deserialize AppUser object from file
      *
      * @param name The name of the user. Used to build file name ${name}.jso
-     * @return
-     * @throws Exception
      */
     public AppUser tryDeserialize(String name) throws Exception {
-        if (Files.exists(Paths.get(name + ".jso"))) {
+        if (Files.exists(Paths.get("cache/" + name + ".jso"))) {
             return deserialize(name);
         }
         return null;
@@ -215,7 +204,7 @@ public class FabcarJava {
 
     public AppUser deserialize(String name) throws Exception {
         try (ObjectInputStream decoder = new ObjectInputStream(
-                Files.newInputStream(Paths.get(name + ".jso")))) {
+                Files.newInputStream(Paths.get("cache/" + name + ".jso")))) {
             return (AppUser) decoder.readObject();
         }
     }
